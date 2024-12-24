@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { recommendJobs } from '../../api';
-import JobList from './JobList';
+import JobList from '../JobList/JobList';
 import axios from 'axios';
 
 const Recommendations = () => {
