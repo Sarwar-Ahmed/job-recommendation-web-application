@@ -2,8 +2,8 @@ import React from 'react'
 
 function PageNotFound() {
   return (
-    <div>
-        <h1 style={{textAlign: "center", height: "100vh"}}>Page Not Found 404</h1>
+    <div style={{witdth: "100%", textAlign: "center", height: "100vh", color: "white"}}>
+        <h1 style={{ padding: "10%" }}>Page Not Found 404!!!</h1>
     </div>
   )
 }

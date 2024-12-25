@@ -5,7 +5,7 @@ import Recommendations from '../Recommendations/Recommendations'
 
 function Home() {
   return (
-    <div style={{textAlign: "center", justifyContent: "center"}}>
+    <div style={{ textAlign: "center", justifyContent: "center", color: "white" }}>
         <Header />
         <Recommendations />
         <Footer />

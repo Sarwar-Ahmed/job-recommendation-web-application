@@ -14,6 +14,7 @@ function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Job Recommender
           </Typography>
+          <Button color="inherit"><Link rel="icon" to="/" style={{textDecoration: 'none', color: 'inherit'}}>Profile</Link></Button>
           <Button color="inherit"><Link rel="icon" to="/login" style={{textDecoration: 'none', color: 'inherit'}}>Login</Link></Button>
         </Toolbar>
       </AppBar>

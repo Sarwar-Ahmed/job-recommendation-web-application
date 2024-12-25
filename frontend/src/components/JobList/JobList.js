@@ -28,6 +28,7 @@ const JobList = () => {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
+        document.documentElement.scrollTop = 0;
     };
 
 
@@ -35,7 +36,20 @@ const JobList = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
-      <h1 style={{ color: "#ffffff", padding: "2%" }}>Available Jobs</h1>
+      <h1 style={{ color: "#ffffff" }}>Available Jobs</h1>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: '10px' }}>
+        <Stack spacing={2} sx={{ width: "100%", marginBottom: 2, borderRadius: 2, padding: 2 }}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handleChangePage}
+          color="primary"
+          bgColor="white"
+          size="large"
+        />
+        </Stack>
+      </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {jobs.map((job, index) => (

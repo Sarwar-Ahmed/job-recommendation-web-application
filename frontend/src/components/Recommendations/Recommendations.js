@@ -28,6 +28,7 @@ const Recommendations = () => {
     <div>
         <div>
             <Box display="flex" flexDirection="column" alignItems="center" sx={{ padding: '5%'}}  mt={4}>
+                <h3 style={{ color: "#ffffff", padding: "2%" }}>Find job postings based on your skills</h3>
                 <TextField
                     label="Enter your skills"
                     variant="outlined"
@@ -48,7 +49,7 @@ const Recommendations = () => {
       {noRecommendation ? (
         <JobList></JobList>
       ) : (
-        <h1 style={{ color: "#ffffff", padding: "2%" }}>Rcommended Jobs</h1>
+        <h1 style={{ color: "#ffffff", padding: "2%" }}>Top 10 Jobs Recommendation Based On Your Skills</h1>
       )}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {recommendedJobs.map((job, index) => (
