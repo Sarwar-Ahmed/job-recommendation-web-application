@@ -7,9 +7,7 @@ const JobList = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-//   useEffect(() => {
-//     fetchJobs().then(({ data }) => setJobs(data.results));
-//   }, []);
+
 
     useEffect(() => {
         fetchData(page - 1);
@@ -45,7 +43,6 @@ const JobList = () => {
           page={page}
           onChange={handleChangePage}
           color="primary"
-          bgColor="white"
           size="large"
         />
         </Stack>
@@ -85,7 +82,6 @@ const JobList = () => {
           page={page}
           onChange={handleChangePage}
           color="primary"
-          bgColor="white"
           size="large"
         />
         </Stack>
