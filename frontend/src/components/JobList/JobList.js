@@ -64,13 +64,13 @@ const JobList = () => {
             <Typography variant="body1" component="div" gutterBottom>
                 <strong>Skills Required: </strong>{job.skills}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" >
                 <strong>Company name: </strong>{job.company}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" >
                 <strong>Location: </strong>{job.location}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" >
                 <strong>Country: </strong>{job.country}
             </Typography>
             

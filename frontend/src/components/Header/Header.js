@@ -12,9 +12,10 @@ function Header() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Job Recommender
+            <Link rel="icon" to="/" style={{textDecoration: 'none', color: 'inherit'}}>Job Recommender</Link>
           </Typography>
-          <Button color="inherit"><Link rel="icon" to="/" style={{textDecoration: 'none', color: 'inherit'}}>Profile</Link></Button>
+          <Button color="inherit"><Link rel="icon" to="/home" style={{textDecoration: 'none', color: 'inherit'}}>Home</Link></Button>
+          <Button color="inherit"><Link rel="icon" to="/profile" style={{textDecoration: 'none', color: 'inherit'}}>Profile</Link></Button>
           <Button color="inherit"><Link rel="icon" to="/login" style={{textDecoration: 'none', color: 'inherit'}}>Login</Link></Button>
         </Toolbar>
       </AppBar>

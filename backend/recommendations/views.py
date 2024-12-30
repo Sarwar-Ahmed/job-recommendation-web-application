@@ -3,7 +3,11 @@ from rest_framework.response import Response
 from .models import JobListing
 from .ml_recommendation_model import recommend_jobs
 from rest_framework.pagination import PageNumberPagination
-from .serializers import JobListingSerializer
+from .serializers import JobListingSerializer, RegisterSerializer
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
+from django.contrib.auth import authenticate
 
 
 
@@ -43,3 +47,32 @@ class JobRecommendationView(APIView):
         serializer = JobListingSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
     
+
+# Register View
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User created successfully!"}, status=201)
+        return Response(serializer.errors, status=400)
+
+
+# Login View
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+            })
+        return Response({"error": "Invalid credentials"}, status=400)
