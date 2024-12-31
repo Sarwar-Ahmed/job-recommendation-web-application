@@ -1,9 +1,13 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { logIn } from '../../api';
+import React, { useContext, useState } from 'react'
+import axiosAPI, { logIn } from '../../api';
+import { UserContext } from '../../App';
+import { Link } from 'react-router-dom';
 
 
 function LogIn() {
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -22,8 +26,9 @@ function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await logIn(formData);
+      const response = await axiosAPI.post('/login/', formData);
       localStorage.setItem("access_token", response.data.access); // Store the token
+      console.log(localStorage.getItem("access_token"));
       alert("Login Successful");
     } catch (error) {
       alert("Error: " + error.response.data.error);
@@ -79,6 +84,7 @@ function LogIn() {
             >
               Log In
             </Button>
+            Create an Account? <Link style={{textDecoration: "none", color: '#1565C0'}} to="/register">Register</Link>
           </form>
         </Box>
       </Container>

@@ -1,7 +1,8 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { userRegister } from '../../api';
+import axiosAPI from '../../api';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 function Register() {
@@ -30,7 +31,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/register/', formData);
+      const response = await axiosAPI.post('/register/', formData);
       alert(response.data.message);
     } catch (error) {
       alert("Error: " + error.response.data);
@@ -123,6 +124,7 @@ function Register() {
             >
               Register
             </Button>
+            Already have an Account? <Link style={{textDecoration: "none", color: '#1565C0'}} to="/login">Login</Link>
           </form>
         </Box>
       </Container>
