@@ -1,18 +1,23 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import axiosAPI, { logIn } from '../../api';
+import axiosAPI from '../../api';
 import { UserContext } from '../../App';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function LogIn() {
 
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [user, setUser] = useState({
+    username: "",
+  });
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,14 +31,22 @@ function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosAPI.post('/login/', formData);
+      const response = await axiosAPI.post("/login/", formData);
       localStorage.setItem("access_token", response.data.access); // Store the token
-      console.log(localStorage.getItem("access_token"));
+
+      setUser({
+        username: formData.username,
+      });
+
       alert("Login Successful");
+      
+      
+      navigate("/home");
     } catch (error) {
       alert("Error: " + error.response.data.error);
     }
   };
+  setLoggedInUser(user);
   
   return (
     <div style={{witdth: "100%", textAlign: "center", height: "100vh"}}>
