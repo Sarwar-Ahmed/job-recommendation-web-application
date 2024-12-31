@@ -31,11 +31,12 @@ const Recommendations = () => {
                 <h3 style={{ color: "#ffffff", padding: "2%" }}>Find job postings based on your skills</h3>
                 <TextField
                     label="Enter your skills"
+                    name="skills"
                     variant="outlined"
                     value={skills}
-                    required
                     onChange={(e) => setSkills(e.target.value)}
                     sx={{ width: '50%', marginBottom: 2, backgroundColor: '#ffffff', borderRadius: 2 }}
+                    required
                 />
                 <Button
                     variant="contained"

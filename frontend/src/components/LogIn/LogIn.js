@@ -76,6 +76,7 @@ function LogIn() {
               value={formData.username}
               sx={{ marginBottom: 2, backgroundColor: '#ffffff', borderRadius: 2 }}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Password"
@@ -87,6 +88,7 @@ function LogIn() {
               value={formData.password}
               sx={{ marginBottom: 2, backgroundColor: '#ffffff', borderRadius: 2 }}
               onChange={handleChange}
+              required
             />
             <Button 
               type="submit"
