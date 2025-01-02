@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import axiosAPI from "../../api";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 function Profile() {
+  const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -68,11 +83,18 @@ function Profile() {
         },
       });
       alert("Profile updated successfully!");
+      setEdit(false);
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Error updating profile");
     }
   };
+
+  const handleEdit = () => {
+    setEdit(true);
+  };
+
+  const skillsArray = formData.skills.split(',').map(skill => skill.trim());
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -85,126 +107,234 @@ function Profile() {
         color: "white",
       }}
     >
-      <Container maxWidth="75%" mt={1} sx={{ padding: "1%", width: "70%" }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: 3,
-            border: "1px solid #ddd",
-            borderRadius: 2,
-            boxShadow: 2,
-          }}
-        >
-          <Typography variant="h5" component="h1" gutterBottom>
-            Your Profile
-          </Typography>
+      {edit ? (
+        <Container mt={1} sx={{ padding: "1%", width: "70%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: 3,
+              border: "1px solid #ddd",
+              borderRadius: 2,
+              boxShadow: 2,
+            }}
+          >
+            <Typography variant="h5" component="h1" gutterBottom>
+              Your Profile
+            </Typography>
 
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <TextField
-              label="First Name"
-              name="first_name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formData.first_name}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-            />
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <TextField
+                label="First Name"
+                name="first_name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formData.first_name}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+              />
 
-            <TextField
-              label="Last Name"
-              name="last_name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formData.last_name}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-            />
-            <TextField
-              label="Date Of Birth"
-              name="date_of_birth"
-              type="date"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formData.date_of_birth}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              label="Email"
-              name="email"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              type="email"
-              value={formData.email}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-            />
-            <TextField
-              label="Phone"
-              name="phone"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formData.phone}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-            />
-            <TextField
-              label="Skills"
-              name="skills"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={formData.skills}
-              sx={{
-                marginBottom: 2,
-                backgroundColor: "#ffffff",
-                borderRadius: 2,
-              }}
-              onChange={handleChange}
-            />
+              <TextField
+                label="Last Name"
+                name="last_name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formData.last_name}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Date Of Birth"
+                name="date_of_birth"
+                type="date"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formData.date_of_birth}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                label="Email"
+                name="email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="email"
+                value={formData.email}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Phone"
+                name="phone"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formData.phone}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Skills"
+                name="skills"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={formData.skills}
+                sx={{
+                  marginBottom: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 2,
+                }}
+                onChange={handleChange}
+              />
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
-            >
-              Save Profile
-            </Button>
-          </form>
-        </Box>
-      </Container>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+              >
+                Save Profile
+              </Button>
+            </form>
+          </Box>
+        </Container>
+      ) : (
+        <Container mt={1} sx={{ padding: "1%", width: "70%" }}>
+          <TableContainer
+            component={Paper}
+            sx={{ maxWidth: "100%", margin: "auto", padding: 2 }}
+          >
+            <Table aria-label="user profile">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    colSpan={2}
+                    align="center"
+                    sx={{ fontWeight: "bold", fontSize: 20 }}
+                  >
+                    Your Profile
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* First Name */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    First Name
+                  </TableCell>
+                  <TableCell>{formData.first_name}</TableCell>
+                </TableRow>
+
+                {/* Last Name */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    Last Name
+                  </TableCell>
+                  <TableCell>{formData.last_name}</TableCell>
+                </TableRow>
+
+                {/* Date of Birth */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    Date of Birth
+                  </TableCell>
+                  <TableCell>{formData.date_of_birth}</TableCell>
+                </TableRow>
+
+                {/* Email */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    Email
+                  </TableCell>
+                  <TableCell>{formData.email}</TableCell>
+                </TableRow>
+
+                {/* Phone */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    Phone
+                  </TableCell>
+                  <TableCell>{formData.phone}</TableCell>
+                </TableRow>
+
+                {/* Skills */}
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    Skills
+                  </TableCell>
+                  <TableCell>
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        label={skill}
+                        variant="outlined"
+                        color="primary"
+                        sx={{ marginRight: 1 }}
+                      />
+                    ))}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Button variant="contained" color="primary" onClick={handleEdit} sx={{ margin: "10px" }} >
+            Edit Profile
+          </Button>
+        </Container>
+      )}
     </div>
   );
 }
