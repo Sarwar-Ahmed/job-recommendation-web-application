@@ -25,4 +25,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name = validated_data['first_name'],
             last_name = validated_data['last_name']
         )
+        
+        # user_profile = UserProfile.objects.create(user=user)
         return user
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'skills']

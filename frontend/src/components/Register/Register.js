@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import axiosAPI from '../../api';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Register() {
@@ -15,7 +15,7 @@ function Register() {
     last_name: '',
   });
 
-  
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +33,7 @@ function Register() {
     try {
       const response = await axiosAPI.post('/register/', formData);
       alert(response.data.message);
+      navigate("/login");
     } catch (error) {
       alert("Error: " + error.response.data);
     }

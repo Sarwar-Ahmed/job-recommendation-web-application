@@ -6,6 +6,7 @@ export const fetchJobs = (pageNum) => axiosAPI.get(`/jobs/?page=${pageNum + 1}`)
 export const recommendJobs = (skills) => axiosAPI.post('/job_recommend/', { skills });
 export const logIn = (loginData) => axiosAPI.post('/login/', {loginData});
 export const userRegister = (userData) => axiosAPI.post('/register/', {userData});
+export const profile = (user) => axiosAPI.post('/profile/', {user});
 
 axiosAPI.interceptors.request.use(
     (config) => {

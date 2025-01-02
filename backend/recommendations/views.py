@@ -1,13 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import JobListing
+from .models import JobListing, UserProfile
 from .ml_recommendation_model import recommend_jobs
 from rest_framework.pagination import PageNumberPagination
-from .serializers import JobListingSerializer, RegisterSerializer
+from .serializers import JobListingSerializer, RegisterSerializer, UserProfileSerializer
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated
+
 
 
 
@@ -76,3 +78,26 @@ class LoginView(APIView):
                 'refresh': str(refresh),
             })
         return Response({"error": "Invalid credentials"}, status=400)
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            serializer = UserProfileSerializer(user_profile)
+            return Response(serializer.data)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found."}, status=404)
+
+    def put(self, request):
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            serializer = UserProfileSerializer(user_profile, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=400)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found."}, status=404)
