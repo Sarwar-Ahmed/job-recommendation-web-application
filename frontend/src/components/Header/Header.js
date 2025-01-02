@@ -12,7 +12,6 @@ function Header() {
   const navigate = useNavigate();
 
   const LogOut = () => {
-    console.log("log out done");
     localStorage.removeItem("access_token");
     setLoggedInUser(null);
     navigate("/login");

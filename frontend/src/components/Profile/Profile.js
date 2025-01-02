@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
 import axiosAPI from "../../api";
 import {
   Box,
@@ -16,8 +15,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { UserContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 function Profile() {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   const [edit, setEdit] = useState(false);
+
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -27,7 +33,6 @@ function Profile() {
     skills: "",
   });
 
-  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch existing profile data when the component mounts
   useEffect(() => {
@@ -39,8 +44,6 @@ function Profile() {
           },
         });
         setFormData({
-          bio: response.data.bio || "",
-          profile_picture: response.data.profile_picture || null,
           first_name: response.data.first_name || "",
           last_name: response.data.last_name || "",
           date_of_birth: response.data.date_of_birth || "",
@@ -48,14 +51,13 @@ function Profile() {
           phone: response.data.phone || "",
           skills: response.data.skills || "",
         });
-        setIsLoading(false);
+        
       } catch (error) {
         console.error("Error fetching profile data:", error);
-        setIsLoading(false);
       }
     };
     fetchProfileData();
-  }, []);
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,13 +92,27 @@ function Profile() {
     }
   };
 
+  const handleUserData = () => {
+    setLoggedInUser({
+      username: loggedInUser.username,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      phone: formData.phone,
+      skills: formData.skills,
+    });
+    navigate("/home");
+  };
+
   const handleEdit = () => {
     setEdit(true);
   };
 
   const skillsArray = formData.skills.split(',').map(skill => skill.trim());
 
-  if (isLoading) return <div>Loading...</div>;
+  
+  
+
 
   return (
     <div
@@ -330,6 +346,9 @@ function Profile() {
               </TableBody>
             </Table>
           </TableContainer>
+          <Button variant="contained" color="primary" onClick={handleUserData} sx={{ margin: "10px" }} >
+            Get Recommendation
+          </Button>
           <Button variant="contained" color="primary" onClick={handleEdit} sx={{ margin: "10px" }} >
             Edit Profile
           </Button>

@@ -1,5 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axiosAPI from '../../api';
 import { UserContext } from '../../App';
 import { Link, useNavigate } from 'react-router-dom';
@@ -33,6 +33,7 @@ function LogIn() {
     try {
       const response = await axiosAPI.post("/login/", formData);
       localStorage.setItem("access_token", response.data.access); // Store the token
+      
 
       setUser({
         username: formData.username,
