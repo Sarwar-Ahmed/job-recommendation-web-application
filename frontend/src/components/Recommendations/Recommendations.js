@@ -12,7 +12,7 @@ import {
 import { UserContext } from "../../App";
 
 const Recommendations = () => {
-  const [skills, setSkills] = useState("");
+  const [inputSkills, setInputSkills] = useState("");
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [recommendation, setRecommendation] = useState(false);
   const [recommendedJobs, setRecommendedJobs] = useState([]);
@@ -20,13 +20,14 @@ const Recommendations = () => {
 
   
 
-  const handleRecommend = async () => {
+  const handleRecommend = async (skills) => {
     try {
       const response = await recommendJobs(skills);
 
       setRecommendedJobs(response.data.results);
 
       setRecommendation(true);
+      setInputSkills(skills);
 
       // setRecommendedJobs(response.data);
     } catch (error) {
@@ -36,10 +37,9 @@ const Recommendations = () => {
 
   useEffect(() => {
     if (loggedInUser.skills) {
-      setSkills(loggedInUser.skills);
-      handleRecommend();
+      handleRecommend(loggedInUser.skills);
     }
-  }, [loggedInUser]);
+  }, [loggedInUser.skills]);
 
 
   return (
@@ -59,8 +59,8 @@ const Recommendations = () => {
             label="Enter your skills"
             name="skills"
             variant="outlined"
-            value={skills}
-            onChange={(e) => setSkills(e.target.value)}
+            value={inputSkills}
+            onChange={(e) => setInputSkills(e.target.value)}
             sx={{
               width: "50%",
               marginBottom: 2,
@@ -69,16 +69,26 @@ const Recommendations = () => {
             }}
             required
           />
-          <Button variant="contained" color="primary" onClick={handleRecommend}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleRecommend(inputSkills)}
+          >
             Get Recommendations
           </Button>
         </Box>
       </div>
       {recommendation ? (
         <div>
-          <h1 style={{ color: "#ffffff", padding: "2%" }}>
-            Top 10 Jobs Recommendation Based On Your Skills
-          </h1>
+          {loggedInUser.skills ? (
+            <h1 style={{ color: "#ffffff", padding: "2%" }}>
+              Top 10 Jobs Recommendation Based On Your Profile Skills
+            </h1>
+          ) : (
+            <h1 style={{ color: "#ffffff", padding: "2%" }}>
+              Top 10 Jobs Recommendation Based On Your Input Skills
+            </h1>
+          )}
 
           <div
             style={{

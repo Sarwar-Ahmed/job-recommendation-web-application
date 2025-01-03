@@ -13,7 +13,7 @@ function Header() {
 
   const LogOut = () => {
     localStorage.removeItem("access_token");
-    setLoggedInUser(null);
+    setLoggedInUser({});
     navigate("/login");
   };
 
